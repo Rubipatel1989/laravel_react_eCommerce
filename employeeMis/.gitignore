@@ -22,5 +22,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-employeeMis/node_modules
-server/node_modules
