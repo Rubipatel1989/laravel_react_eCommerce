@@ -1,9 +1,13 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Login from "./Components/Login";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from "./Components/Dashboard";
+import Home from "./Components/Home";
+import Profile from "./Components/Profile";
+import Employee from "./Components/Employee"; // Import the Employee component
+import Category from "./Components/Category"; // Import the Category component
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -11,8 +15,13 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/adminlogin" element={<Login />}></Route>
-        <Route path="/dashboard" element={<Dashboard />}></Route>
+        <Route path="/adminlogin" element={<Login />} />
+        <Route path="/dashboard" element={<Dashboard />}>
+          <Route path="" element={<Home />} />
+          <Route path="/dashboard/employee" element={<Employee />} />
+          <Route path="/dashboard/category" element={<Category />} />
+          <Route path="/dashboard/profile" element={<Profile />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
