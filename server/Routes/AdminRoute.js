@@ -23,5 +23,18 @@ router.post("/adminlogin", (req, res) => {
     }
   });
 });
+router.post("/add_category", (req,res) => {
+    const sql = "INSERT INTO category (name) VALUES (?)";
+    con.query(sql, [req.body.category], (err, result) => {
+        console.log(err + ' Error');
+        console.log(result + 'result');
+        if (err) {
+            console.log(err);
+          return res.json({ status: false, Error: "Query error" });
+        } else{
+            return res.json({ status: true, Error: "Added successfully." });
+        }
+      });
+});
 
 export { router as adminRouter };
