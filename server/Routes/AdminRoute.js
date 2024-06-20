@@ -8,6 +8,7 @@ router.post("/adminlogin", (req, res) => {
   const sql = "SELECT * FROM admin WHERE email = ? and password = ?";
   con.query(sql, [req.body.email, req.body.password], (err, result) => {
     if (err) {
+      console.log(err);
       return res.json({ loginStatus: false, Error: "Query error" });
     } else if (result.length > 0) {
       const email = result[0].email;
@@ -35,6 +36,17 @@ router.post("/add_category", (req,res) => {
             return res.json({ status: true, Error: "Added successfully." });
         }
       });
+});
+
+router.get("/category", (req,res) => {
+  const sql = "SELECT * FROM category";
+  con.query(sql, (err, result) => {
+      if (err) {
+        return res.json({ status: false, Error: "Query error" });
+      } else{
+          return res.json({ status: true, Result: result });
+      }
+    });
 });
 
 export { router as adminRouter };
