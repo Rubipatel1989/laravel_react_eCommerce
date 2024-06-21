@@ -8,6 +8,7 @@ import Profile from "./Components/Profile";
 import Employee from "./Components/Employee"; // Import the Employee component
 import Category from "./Components/Category"; // Import the Category component
 import AddCategory from "./Components/AddCategory"; // Import the Category component
+import AddEmployee from "./Components/AddEmployee"; // Import the Category component
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path="/dashboard/category" element={<Category />} />
           <Route path="/dashboard/profile" element={<Profile />} />
           <Route path="/dashboard/add_category" element={<AddCategory />} />
+          <Route path="/dashboard/add_employee" element={<AddEmployee />} />
         </Route>
       </Routes>
     </BrowserRouter>

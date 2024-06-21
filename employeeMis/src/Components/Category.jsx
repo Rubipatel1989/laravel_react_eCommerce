@@ -29,7 +29,7 @@ const Category = () => {
         Add Category
       </Link>
       <div>
-        <table>
+        <table className="table">
           <thead>
             <tr>
               <th>ID</th>
