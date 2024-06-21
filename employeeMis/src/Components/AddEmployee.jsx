@@ -4,6 +4,16 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const AddEmployee = () => {
+  const [employee, setEmployee] = useState({
+    name: "",
+    email: "",
+    password: "",
+    address: "",
+    category_id: "",
+    image: "",
+    salary: "",
+  });
+
   const [category, setCategory] = useState([]);
   useEffect(() => {
     axios
@@ -18,25 +28,19 @@ const AddEmployee = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  const [employee, setEmployee] = useState({
-    name: "",
-    email: "",
-    password: "",
-    address: "",
-    category_id: "",
-    image: "",
-    salary: "",
-  });
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(employee);
     axios
-      .post("http://localhost:3000/auth/add_employee", { employee })
+      .post("http://localhost:3000/auth/add_employee", employee)
       .then((result) => {
         if (result.data.status) {
+          console.log("Success");
           navigate("/dashboard/employee");
         } else {
-          alert(result.data.Error);
+          console.log(result.data.message);
+          alert(result.data.message.sqlMessage);
         }
       })
       .catch((err) => console.log(err));
@@ -45,14 +49,13 @@ const AddEmployee = () => {
     <div className="d-flex justify-content-center align-items-center mt-3">
       <div className="p-3 rounded w-50 border">
         <h3>Add Employee</h3>
-        <form onSubmit={handleSubmit} className="row g-1">
+        <form className="row g-1" onSubmit={handleSubmit}>
           <div className="col-12">
             <label for="name">
               <string>Employee:</string>
             </label>
             <input
               type="text"
-              name="name"
               id="inputName"
               autoComplete="off"
               placeholder="Enter Name"
@@ -130,10 +133,14 @@ const AddEmployee = () => {
             <label for="category">
               <string>Select Category:</string>
             </label>
-            <select name="category_id" id="category_id" className="form-select"
-            onChange={(e) =>
-              setEmployee({ ...employee, category_id: e.target.value })
-            }>
+            <select
+              name="category_id"
+              id="category_id"
+              className="form-select"
+              onChange={(e) =>
+                setEmployee({ ...employee, category_id: e.target.value })
+              }
+            >
               {category.map((c) => (
                 <option value={c.id}>{c.name}</option>
               ))}

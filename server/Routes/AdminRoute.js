@@ -4,6 +4,7 @@ import con from "../utils/db.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
+
 router.post("/adminlogin", (req, res) => {
   console.log(req.body);
   const sql = "SELECT * FROM admin WHERE email = ? and password = ?";
@@ -50,12 +51,11 @@ router.get("/category", (req, res) => {
   });
 });
 router.post("/add_employee", (req, res) => {
-  console.log(req.body);
   const sql =
     "INSERT INTO employee (name, email, password, category_id, salary, address, image) VALUES (?)";
   bcrypt.hash(req.body.password.toString(), 10, (err, hash) => {
     if (err) {
-      return res.json({ status: false, Error: "Query error" });
+      return res.json({ status: false, Error: hash });
     }
     const values = [
       req.body.name,
@@ -64,16 +64,13 @@ router.post("/add_employee", (req, res) => {
       req.body.category_id,
       req.body.salary,
       req.body.address,
-      req.body.image,
+      req.body.image
     ];
     con.query(sql, [values], (err, result) => {
-      console.log(err + " Error");
-      console.log(result + "result");
       if (err) {
-        console.log(err);
-        return res.json({ status: false, Error: "Query error" });
+        return res.json({ status: false, message: err });
       } else {
-        return res.json({ status: true, Error: "Added successfully." });
+        return res.json({ status: true, message: "Successfully Addedd" });
       }
     });
   });
