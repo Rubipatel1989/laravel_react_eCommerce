@@ -35,6 +35,9 @@ const Employee = () => {
             <tr>
               <th>ID</th>
               <th>Name</th>
+              <th>Email</th>
+              <th>Salary</th>
+              <th>Address</th>
               <th>Created At</th>
             </tr>
           </thead>
@@ -43,6 +46,9 @@ const Employee = () => {
               <tr>
                 <td>{c.id}</td>
                 <td>{c.name}</td>
+                <td>{c.email}</td>
+                <td>{c.salary}</td>
+                <td>{c.address}</td>
                 <td>{formatDate(c.created_at)}</td>
               </tr>
             ))}

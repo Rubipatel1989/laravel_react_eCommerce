@@ -31,9 +31,17 @@ const AddEmployee = () => {
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append('name', employee.name);
+    formData.append('email', employee.email);
+    formData.append('password', employee.password);
+    formData.append('address', employee.address);
+    formData.append('salary', employee.salary);
+    formData.append('category_id', employee.category_id);
+    formData.append('image', employee.image);
     console.log(employee);
     axios
-      .post("http://localhost:3000/auth/add_employee", employee)
+      .post("http://localhost:3000/auth/add_employee", formData )
       .then((result) => {
         if (result.data.status) {
           console.log("Success");
@@ -153,7 +161,7 @@ const AddEmployee = () => {
             <input
               type="file"
               id="inputGroupFile01"
-              autoComplete="off"
+              name="image"
               className="form-control rounded-0"
               onChange={(e) =>
                 setEmployee({ ...employee, image: e.target.files[0] })
