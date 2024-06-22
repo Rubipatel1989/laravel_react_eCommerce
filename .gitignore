@@ -25,3 +25,4 @@ dist-ssr
 employeeMis/node_modules
 server/node_modules
 video.mp4
+server/Public/Images

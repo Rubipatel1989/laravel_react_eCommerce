@@ -8,6 +8,7 @@ app.use(cors({
     methods:["GET","POST","PUT"],
     credentials:true
 }));
+app.use(express.static('Public'))
 app.use(express.json());
 app.use('/auth', adminRouter);
 app.listen(3000, () => {

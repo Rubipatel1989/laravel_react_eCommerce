@@ -1,11 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import {format} from 'date-fns';
-
+import { format } from "date-fns";
 
 const formatDate = (dateString) => {
-  return format(new Date(dateString), 'MMMM dd, yyyy');
+  return format(new Date(dateString), "MMMM dd, yyyy");
 };
 const Employee = () => {
   const [employee, setEmployee] = useState([]);
@@ -38,7 +37,8 @@ const Employee = () => {
               <th>Email</th>
               <th>Salary</th>
               <th>Address</th>
-              <th>Created At</th>
+              <th>Image</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -49,7 +49,13 @@ const Employee = () => {
                 <td>{c.email}</td>
                 <td>{c.salary}</td>
                 <td>{c.address}</td>
-                <td>{formatDate(c.created_at)}</td>
+                <td>
+                  <img src={`http://localhost:3000/Images/` + c.image} alt="Profile" className="employee_image" />
+                </td>
+                <td>
+                  <Link to={`/dashboard/edit_employee/` + c.id} className="btn btn-info btn-sm">Edit</Link>&nbsp;
+                  <Link to={`/dashboard/delete_employee` + c.id} className="btn btn-danger btn-sm">Delete</Link>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -59,4 +65,4 @@ const Employee = () => {
   );
 };
 
-export default Employee
+export default Employee;
