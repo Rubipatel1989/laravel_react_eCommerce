@@ -19,7 +19,7 @@ const Dashboard = () => {
             >
               <li className="w-100">
                 <Link
-                  to="/dashboard/employee"
+                  to="/dashboard"
                   className="nav-link px-0 align-middle text-white"
                 >
                   <i className="fs-4 bi-speedometer2 ms-2"></i>

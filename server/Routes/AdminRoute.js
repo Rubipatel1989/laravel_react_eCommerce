@@ -80,6 +80,17 @@ router.get("/employee", (req, res) => {
     }
   });
 });
+router.get("/employee/:id", (req, res) => {
+  const id = req.params.id;
+  const sql = "SELECT * FROM employee where id = ?";
+  con.query(sql, [id],(err, result) => {
+    if (err) {
+      return res.json({ status: false, Error: "Query error" });
+    } else {
+      return res.json({ status: true, Result: result });
+    }
+  });
+});
 
 router.post("/add_employee", upload.single('image'), (req, res) => {
   const sql =
@@ -105,6 +116,37 @@ router.post("/add_employee", upload.single('image'), (req, res) => {
       }
     });
   });
+});
+
+router.put("/edit_employee/:id", (req, res) => {
+  const id = req.params.id;
+  const sql =
+    "UPDATE employee SET name=?, email=?, address=?, salary=?, category_id=? where id = ?";
+    const values = [
+      req.body.name,
+      req.body.email,
+      req.body.address,
+      req.body.salary,
+      req.body.category_id
+    ];
+    con.query(sql, [...values, id], (err, result) => {
+      if (err) {
+        return res.json({ status: false, message: err });
+      } else {
+        return res.json({ status: true, message: "Successfully Updated" });
+      }
+    });
+});
+router.delete("/delete_employee/:id", (req, res) => {
+  const id = req.params.id;
+  const sql = "DELETE FROM employee where id = ?";
+    con.query(sql, [id], (err, result) => {
+      if (err) {
+        return res.json({ status: false, message: err });
+      } else {
+        return res.json({ status: true, message: "Successfully Deleted" });
+      }
+    });
 });
 
 export { router as adminRouter };
