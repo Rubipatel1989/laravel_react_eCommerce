@@ -83,7 +83,7 @@ router.get("/employee", (req, res) => {
 router.get("/employee/:id", (req, res) => {
   const id = req.params.id;
   const sql = "SELECT * FROM employee where id = ?";
-  con.query(sql, [id],(err, result) => {
+  con.query(sql, [id], (err, result) => {
     if (err) {
       return res.json({ status: false, Error: "Query error" });
     } else {
@@ -92,7 +92,7 @@ router.get("/employee/:id", (req, res) => {
   });
 });
 
-router.post("/add_employee", upload.single('image'), (req, res) => {
+router.post("/add_employee", upload.single("image"), (req, res) => {
   const sql =
     "INSERT INTO employee (name, email, password, category_id, salary, address, image) VALUES (?)";
   bcrypt.hash(req.body.password.toString(), 10, (err, hash) => {
@@ -106,7 +106,7 @@ router.post("/add_employee", upload.single('image'), (req, res) => {
       req.body.category_id,
       req.body.salary,
       req.body.address,
-      req.file.filename
+      req.file.filename,
     ];
     con.query(sql, [values], (err, result) => {
       if (err) {
@@ -122,31 +122,87 @@ router.put("/edit_employee/:id", (req, res) => {
   const id = req.params.id;
   const sql =
     "UPDATE employee SET name=?, email=?, address=?, salary=?, category_id=? where id = ?";
-    const values = [
-      req.body.name,
-      req.body.email,
-      req.body.address,
-      req.body.salary,
-      req.body.category_id
-    ];
-    con.query(sql, [...values, id], (err, result) => {
-      if (err) {
-        return res.json({ status: false, message: err });
-      } else {
-        return res.json({ status: true, message: "Successfully Updated" });
-      }
-    });
+  const values = [
+    req.body.name,
+    req.body.email,
+    req.body.address,
+    req.body.salary,
+    req.body.category_id,
+  ];
+  con.query(sql, [...values, id], (err, result) => {
+    if (err) {
+      return res.json({ status: false, message: err });
+    } else {
+      return res.json({ status: true, message: "Successfully Updated" });
+    }
+  });
 });
 router.delete("/delete_employee/:id", (req, res) => {
   const id = req.params.id;
   const sql = "DELETE FROM employee where id = ?";
-    con.query(sql, [id], (err, result) => {
-      if (err) {
-        return res.json({ status: false, message: err });
-      } else {
-        return res.json({ status: true, message: "Successfully Deleted" });
-      }
-    });
+  con.query(sql, [id], (err, result) => {
+    if (err) {
+      return res.json({ status: false, message: err });
+    } else {
+      return res.json({ status: true, message: "Successfully Deleted" });
+    }
+  });
+});
+router.get("/admin_count", (req, res) => {
+  const sql = "SELECT COUNT(id) as total FROM admin";
+  con.query(sql, (err, result) => {
+    if (err) {
+      return res.json({ status: false, message: err });
+    } else {
+      return res.json({
+        status: true,
+        message: "Successfully Fetched",
+        Result: result,
+      });
+    }
+  });
+});
+router.get("/employee_count", (req, res) => {
+  const sql = "SELECT COUNT(id) as total FROM employee";
+  con.query(sql, (err, result) => {
+    if (err) {
+      return res.json({ status: false, message: err });
+    } else {
+      return res.json({
+        status: true,
+        message: "Successfully Fetched",
+        Result: result,
+      });
+    }
+  });
+});
+router.get("/salary_count", (req, res) => {
+  const sql = "SELECT SUM(salary) as total FROM employee";
+  con.query(sql, (err, result) => {
+    if (err) {
+      return res.json({ status: false, message: err });
+    } else {
+      return res.json({
+        status: true,
+        message: "Successfully Fetched",
+        Result: result,
+      });
+    }
+  });
+});
+router.get("/admins", (req, res) => {
+  const sql = "SELECT * FROM admin";
+  con.query(sql, (err, result) => {
+    if (err) {
+      return res.json({ status: false, message: err });
+    } else {
+      return res.json({
+        status: true,
+        message: "Successfully Fetched",
+        Result: result,
+      });
+    }
+  });
 });
 
 export { router as adminRouter };
